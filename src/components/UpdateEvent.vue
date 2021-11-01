@@ -19,27 +19,28 @@
 
 <script>
 import {ref} from 'vue'
+import { useStore } from 'vuex';
 export default {
   props: {
     oneEvent: {
       type: Object,
     },
-    handlerMinus:{
-      type: Function
-    }
-
   },
   setup(props){
+      const store = useStore()
       const eve = ref(props.oneEvent.productCount)
-      // const handlerMinus = ()=>{
-      //     eve.value += 1
-      // }
       const handlerPlus = ()=>{
           eve.value -= 1
+          store.commit('session/addCount')
+      }
+      const handlerMinus = ()=>{
+        eve.value += 1
+        store.commit('session/addCount')
       }
       return{
 
         handlerPlus,
+        handlerMinus,
         eve
       }
     }

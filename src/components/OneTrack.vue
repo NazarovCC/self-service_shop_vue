@@ -65,7 +65,7 @@
         <list-events
         :mass="finalArr"
         :isExit="isExit"
-        :handlerMinus="handlerMinus"></list-events>
+        ></list-events>
       </div>
     </div>
     <div v-if="isExit" class="card-bottom">

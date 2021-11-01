@@ -3,6 +3,7 @@ export default {
   state() {
     return{
       activeSession:'',
+      count:0,
        mass:[],  //массив открытой сессии
        showModal: false
 
@@ -14,6 +15,9 @@ export default {
      },
      getActiveSession(state){
       return state.activeSession
+    },
+    getSessionEvent(state){
+      return state.mass
     }
 
   },
@@ -33,6 +37,23 @@ export default {
       newObj['session_id'] = value.id
       state.mass.push(newObj)
 
+    },
+    copyEvent(state,arr){
+      state.mass = [...arr]
+
+    },
+    addPutOnEvent(state,value){
+       const newObj = {}
+       newObj['id'] = Date.now()
+       newObj['type'] = 'put_on'
+       newObj['productName'] = value.name
+       newObj['productCount'] = state.count
+       newObj['session_id'] = value.id
+       state.mass.push(newObj)
+    },
+    addCount(state){
+      state.count += -1
     }
+
   }
 }
