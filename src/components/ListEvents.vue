@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul class="list-group" v-for="m in mass" :key="m.id">
-      <update-event v-if="isExit" :oneEvent="m"></update-event>
+      <update-event v-if="isExit" :oneEvent="m" :handlerMinus="handlerMinus"></update-event>
       <one-event v-else :oneEvent="m"></one-event>
     </ul>
   </div>

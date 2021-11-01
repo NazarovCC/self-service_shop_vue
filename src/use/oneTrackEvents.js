@@ -1,7 +1,5 @@
-import { computed, ref } from 'vue';
-import { useStore} from 'vuex';
-
-
+import { computed, ref} from 'vue';
+import { useStore } from 'vuex';
 
 export function openEventTrack() {
   const store = useStore();
@@ -10,15 +8,29 @@ export function openEventTrack() {
       (list) => list.type === 'open'
     )
   );
+
+  // const mergeEventTrack = (id) => {
+  //   let isExit = false;
+  //   if (exitEventTrackById(id).value) {
+  //     isExit = true;
+  //   }
+  //   return isExit;
+
   return {
     lists,
+    // mergeEventTrack,
   };
 }
-const exitEventTrackById = id=>{
-  const store = useStore();
-  return computed(()=>store.getters["trunstileEvents/getAllTrack"].find(track=>track.sessionId===id&&track.type==='exit'))
 
-}
+
+const exitEventTrackById = (id) => {
+  const store = useStore();
+  return computed(() =>
+    store.getters['trunstileEvents/getAllTrack'].find(
+      (track) => track.sessionId === id && track.type === 'exit'
+    )
+  );
+};
 export function mergeEventTrack(id){
   const isExit = ref(false)
    if (exitEventTrackById(id).value){
@@ -29,4 +41,7 @@ export function mergeEventTrack(id){
 
      }
    }
-
+export function setSession(id) {
+  const store = useStore();
+  store.commit('trunstileEvent/setActiveEvent', id);
+}

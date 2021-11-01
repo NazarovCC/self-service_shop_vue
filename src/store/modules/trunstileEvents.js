@@ -2,6 +2,7 @@ export default {
   namespaced: true,
   state() {
     return {
+      activeSession:'',
       turnstileEvents: [
         {
           id: 4750,
@@ -46,7 +47,14 @@ export default {
     getAllTrack(state) {
       return state.turnstileEvents;
     },
+    getActiveSession(state){
+      return state.activeSession
+    }
   },
-  mutations: {},
+  mutations: {
+    setActiveSession(state,value){
+      state.activeSession = value
+    }
+  },
   actions: {},
 };

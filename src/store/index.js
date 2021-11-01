@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import trunstileEvents from './modules/trunstileEvents'
 import events from './modules/events'
+import session from './modules/session'
 
 export default createStore({
   state: {},
@@ -9,5 +10,6 @@ export default createStore({
   modules: {
     trunstileEvents,
     events,
+    session
   },
 });

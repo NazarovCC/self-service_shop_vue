@@ -24,18 +24,21 @@ export default {
     oneEvent: {
       type: Object,
     },
+    handlerMinus:{
+      type: Function
+    }
 
   },
   setup(props){
       const eve = ref(props.oneEvent.productCount)
-      const handlerMinus = ()=>{
-          eve.value += 1
-      }
+      // const handlerMinus = ()=>{
+      //     eve.value += 1
+      // }
       const handlerPlus = ()=>{
           eve.value -= 1
       }
       return{
-        handlerMinus,
+
         handlerPlus,
         eve
       }

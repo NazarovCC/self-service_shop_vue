@@ -1,4 +1,5 @@
 <template>
+
   <div
     :class="['card', isExit ? 'opentrack' : 'alltrack']"
     style="width: 30rem"
@@ -38,7 +39,7 @@
           <div v-if="isExit">
             <img
               style="margin-right: 5px"
-              src="https://img.icons8.com/small/30/000000/paste.png" 
+              src="https://img.icons8.com/small/30/000000/paste.png"
             />
             <img src="https://img.icons8.com/color/30/000000/menu-2.png" />
           </div>
@@ -61,11 +62,14 @@
         />
       </div>
       <div class="card-list-event">
-        <list-events :mass="finalArr" :isExit="isExit"></list-events>
+        <list-events
+        :mass="finalArr"
+        :isExit="isExit"
+        :handlerMinus="handlerMinus"></list-events>
       </div>
     </div>
     <div v-if="isExit" class="card-bottom">
-      <buttons class="btn btn-outline-primary">Добавить продукт</buttons>
+      <buttons class="btn btn-outline-primary" @click="openModal">Добавить продукт</buttons>
       <buttons class="btn btn-primary">Сохранить</buttons>
     </div>
   </div>
@@ -76,18 +80,29 @@ import ListEvents from "./ListEvents";
 import { useRoute } from "vue-router";
 import { mergeEventTrack } from "../use/oneTrackEvents";
 import { listEvent } from "../use/ListEvent";
+import { useStore } from 'vuex';
+
+
 export default {
   props: {
     track: {
       type: Array,
     },
   },
+
   components: {
     ListEvents,
+    //AddProductModal
   },
   setup() {
+    const store = useStore()
     const route = useRoute();
+    const openModal = ()=>{
+       store.commit('session/changeShowModal',true)
+    }
+
     return {
+      openModal,
       ...mergeEventTrack(route.params.id),
       ...listEvent(route.params.id),
     };
