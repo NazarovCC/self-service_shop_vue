@@ -24,19 +24,15 @@
 
 <script>
 // import { computed } from "vue";
-// import { useStore } from "vuex";
+import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import {openEventTrack} from "../use/oneTrackEvents"
 export default {
   setup() {
-   //  const store = useStore();
+    const store = useStore()
     const router = useRouter();
-   //  const lists = computed(() => {
-   //    return store.getters["trunstileEvents/getAllTrack"].filter(
-   //      (list) => list.type === "open"
-   //    );
-   //  });
     const handlerListClick = (id) => {
+      store.commit('session/setActiveSession',id)
       router.push(`/session/${id}`);
     };
 

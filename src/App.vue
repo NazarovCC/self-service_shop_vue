@@ -16,33 +16,18 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
-import {useStore} from 'vuex'
 import AddProductModal from "./components/AddProductModal";
-import { useRoute } from 'vue-router';
+import {modalNewProduct} from "./use/modalNewProduct"
+
 
 export default {
   components: {
     AddProductModal,
   },
   setup() {
-    const store = useStore()
-    const route = useRoute()
-    const productName = ref('')
-    const showModal = computed(()=>store.getters['session/getShowModal'])
-    const sendEvent = () =>{
-      store.commit('session/addNewProduct',{name:productName.value, id:route.params.id})
-      store.commit('session/changeShowModal',false)
-    }
-    const closeModal = ()=>{
-      store.commit('session/changeShowModal',false)
 
-    }
     return {
-      showModal,
-      closeModal,
-      sendEvent,
-      productName,
+      ...modalNewProduct()
     };
   },
 };
