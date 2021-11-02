@@ -1,7 +1,7 @@
 <template>
 
   <div
-    :class="['card', isExit ? 'opentrack' : 'alltrack']"
+    :class="['card', track[0].isActive ? 'opentrack' : 'alltrack']"
     style="width: 30rem"
   >
     <div class="card-body" style="padding: 0">
@@ -9,7 +9,7 @@
         <div
           class="card-header-icon text-center"
           :style="
-            isExit
+            track[0].isActive
               ? 'background: rgb(202,41,228)'
               : 'background: rgb(53,93,255)'
           "
@@ -29,14 +29,14 @@
           >
             {{ new Date(track[0].timestamp).toLocaleTimeString()
             }}{{
-              isExit
+              track[0].isActive
                 ? `-${new Date(track[1].timestamp).toLocaleTimeString()}`
                 : null
             }}
           </p>
         </div>
         <div class="card-header-buttons">
-          <div v-if="isExit">
+          <div v-if="track[0].isActive">
             <img
               style="margin-right: 5px"
               src="https://img.icons8.com/small/30/000000/paste.png"
@@ -57,30 +57,30 @@
         </p>
 
         <img
-          v-if="isExit"
+          v-if="track[0].isActive"
           src="https://img.icons8.com/fluency-systems-regular/30/000000/append-clip.png"
         />
       </div>
       <div class="card-list-event">
         <list-events
-        :mass="finalArr"
-        :isExit="isExit"
+        :mass="listsEvent"
+        :isExit="track[0].isActive"
         ></list-events>
       </div>
     </div>
-    <div v-if="isExit" class="card-bottom">
-      <buttons class="btn btn-outline-primary" @click="openModal">Добавить продукт</buttons>
-      <buttons class="btn btn-primary">Сохранить</buttons>
+    <div v-if="track[0].isActive" class="card-bottom">
+      <button class="btn btn-outline-primary" @click="openModal">Добавить событие</button>
+      <button class="btn btn-primary" @click="saveSession(track[0])">Сохранить</button>
     </div>
   </div>
 </template>
 
 <script>
-import ListEvents from "./ListEvents";
-import { useRoute } from "vue-router";
-import { mergeEventTrack } from "../use/oneTrackEvents";
-import { listEvent } from "../use/ListEvent";
 import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
+import ListEvents from './ListEvents';
+import { listEvent } from '../use/ListEvent';
+
 
 
 export default {
@@ -92,7 +92,6 @@ export default {
 
   components: {
     ListEvents,
-    //AddProductModal
   },
   setup() {
     const store = useStore()
@@ -100,10 +99,13 @@ export default {
     const openModal = ()=>{
        store.commit('session/changeShowModal',true)
     }
-
+    const saveSession = async(track)=>{
+      track.isActive = false
+      await store.dispatch('trunstileEvents/updateActive',track)
+    }
     return {
       openModal,
-      ...mergeEventTrack(route.params.id),
+      saveSession,
       ...listEvent(route.params.id),
     };
   },

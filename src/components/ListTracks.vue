@@ -23,10 +23,9 @@
 </template>
 
 <script>
-// import { computed } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-import {openEventTrack} from "../use/oneTrackEvents"
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import {openEventTrack} from '../use/oneTrackEvents'
 export default {
   setup() {
     const store = useStore()
@@ -37,7 +36,6 @@ export default {
     };
 
     return {
-      // lists,
       handlerListClick,
       ...openEventTrack()
     };

@@ -1,8 +1,10 @@
 <template>
   <li class="list-group-item list-group-item-action">
       <div class="one_event">
+         <div class="descriptions_event">
            <p>{{oneEvent.productName}}</p>
-           <p>{{Math.abs(oneEvent.productCount)}}</p>
+         </div>
+           <p>{{oneEvent.productCount}}</p>
       </div>
     </li>
 </template>
@@ -26,7 +28,8 @@ export default {
      display: flex;
      justify-content: space-between;
      align-items: center;
-
-
    }
+   .descriptions_event p {
+  text-align: left;
+}
 </style>

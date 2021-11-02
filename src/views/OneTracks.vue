@@ -1,7 +1,6 @@
 <template>
   <div class="container text-center">
-       <!-- <pre>{{session}}</pre> -->
-      <h2>{{headerSession}}</h2>
+      <button class="btn btn-primary" style="marginTop:30px" @click="router.push('/')">На главную</button>
       <one-track :track="session"></one-track>
   </div>
 
@@ -9,8 +8,8 @@
 
 <script>
 import { computed } from 'vue'
-import {useRoute} from "vue-router"
-import {useStore} from "vuex"
+import {useRoute,useRouter} from 'vue-router'
+import {useStore} from 'vuex'
 import OneTrack from '../components/OneTrack.vue'
 export default {
    components:{
@@ -18,12 +17,13 @@ export default {
    },
    setup(){
       const route = useRoute()
+      const router = useRouter();
       const store = useStore()
       const session = computed(()=>
       {return store.getters['trunstileEvents/getAllTrack'].filter(eve=>eve.sessionId===route.params.id)})
       return{
-        headerSession: route.params.id,
         session,
+        router
       }
 
    }

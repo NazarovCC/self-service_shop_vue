@@ -5,9 +5,9 @@
         <p>{{ oneEvent.productName }}</p>
       </div>
       <div class="action_event">
-        <img src="https://img.icons8.com/color/20/000000/empty-trash--v1.png" />
-        <img src="https://img.icons8.com/offices/20/000000/minus--v1.png" @click="handlerMinus"/>
-        <p>{{Math.abs(eve)}}</p>
+        <img src="https://img.icons8.com/color/20/000000/empty-trash--v1.png" @click="deleteEvent(oneEvent.id)"/>
+        <img src="https://img.icons8.com/offices/20/000000/minus--v1.png" v-if="buttonMinus()" @click="handlerMinus"/>
+        <p>{{eve.productCount}}</p>
         <img src="https://img.icons8.com/color/20/000000/plus--v1.png" @click="handlerPlus" />
         <img
           src="https://img.icons8.com/fluency-systems-regular/15/000000/append-clip.png"
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {ref} from 'vue'
+import {reactive, watch} from 'vue'
 import { useStore } from 'vuex';
 export default {
   props: {
@@ -28,19 +28,41 @@ export default {
   },
   setup(props){
       const store = useStore()
-      const eve = ref(props.oneEvent.productCount)
+      const eve = reactive(props.oneEvent)
+      const deleteEvent = async (id)=> {
+         await store.dispatch('events/removeEvent',id)
+      }
+      watch(eve,value=>{
+        store.dispatch('events/updateCountEvent',value)
+
+      })
+      const buttonMinus = ()=>{
+        return eve.productCount!==-1&&eve.productCount!==1
+      }
       const handlerPlus = ()=>{
-          eve.value -= 1
-          store.commit('session/addCount')
+        if (eve.productCount <0){
+            eve.productCount -= 1
+        }
+        else{
+            eve.productCount += 1
+        }
+
       }
       const handlerMinus = ()=>{
-        eve.value += 1
-        store.commit('session/addCount')
+         if (eve.productCount<0){
+           eve.productCount +=1
+         }
+         else{
+           eve.productCount -=1
+         }
+
+
       }
       return{
-
+        deleteEvent,
         handlerPlus,
         handlerMinus,
+        buttonMinus,
         eve
       }
     }

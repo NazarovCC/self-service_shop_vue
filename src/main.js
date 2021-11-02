@@ -2,16 +2,8 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import directive from "./directive"
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
-
-
-const app = createApp(App)
-
-directive.forEach(direct=>{
-  app.directive(direct.name, direct)
-})
+const app = createApp(App);
 
 app.use(store).use(router).mount("#app");

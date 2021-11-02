@@ -22,6 +22,8 @@
               </div>
      </div>
   </div>
+
+
 </template>
 
 <script>
@@ -39,29 +41,27 @@ export default {
   left:0;
   width: 100%;
   height: 100%;
-  transition: opacity 0.3s ease;
+  transition: opacity 5s ease;
 }
 .modal-container {
   width: 500px;
-  margin: 0px auto;
+  margin: 100px auto;
   padding: 20px 30px;
   background-color: #fff;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
-  transition: all 0.3s ease;
+  transition: all 1s ease;
   font-family: Helvetica, Arial, sans-serif;
 }
 .modal-header h3 {
   margin-top: 0;
-  align-content: center;
-  color: #42b983;
+  color: #4276b9;
 }
 
 .modal-body {
   margin: 20px auto;
 }
 
-.modal-default-button {
-  float: right;
-}
+
+
 </style>
